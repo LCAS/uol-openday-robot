@@ -1,7 +1,7 @@
 uol-openday-robot
 =================
 
-Modules for the UOL open day
+Project [website](http://lcas.github.io/uol-openday-robot)
 
 more details, ideas, and discussions to be found in the [wiki](https://github.com/LCAS/uol-openday-robot/wiki/_pages).
 

@@ -3,6 +3,8 @@ uol-openday-robot
 
 Modules for the UOL open day
 
+more details, ideas, and discussions to be found in the [wiki](https://github.com/LCAS/uol-openday-robot/wiki/_pages).
+
 ## Project Synopsis
 
 The aim of this project is to develop a robot demonstration platform to promote the College of Science during Open Days and other public events. It will be based on 

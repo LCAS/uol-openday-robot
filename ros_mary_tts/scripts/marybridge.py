@@ -244,13 +244,13 @@ if __name__ == "__main__":
     # english, male
     # client.set_voice ("dfki-spike")
     # client.set_voice ("dfki-obadiah")
-    #client.set_voice ("dfki-obadiah-hsmm")
+    # client.set_voice ("dfki-obadiah-hsmm")
     # client.set_voice ("cmu-bdl-hsmm")
     # client.set_voice ("cmu-rms-hsmm")
     
     # english, female
     # client.set_voice ("dfki-poppy")
-    #client.set_voice ("dfki-poppy-hsmm")
+    # client.set_voice ("dfki-poppy-hsmm")
     # client.set_voice ("dfki-prudence")
     client.set_voice ("dfki-prudence-hsmm")
     # client.set_voice ("cmu-slt-hsmm")
@@ -273,7 +273,7 @@ if __name__ == "__main__":
 
     while not rospy.is_shutdown():
 	try:
-	    req=q.get(True,1)
+	    req = q.get(True, 1)
 	    rospy.loginfo("say " + req.text)
     	    the_sound = client.generate(req.text)
 	    player.play(the_sound)

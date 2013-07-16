@@ -1,7 +1,6 @@
-image: /opt/strands/autonomous_patrolling/src/map_saver/maps/map.pgm
-resolution: 0.050000
-origin: [-100.000000, -100.000000, 0.000000]
+free_thresh: 0.196
+image: cropped.pgm
 negate: 0
 occupied_thresh: 0.65
-free_thresh: 0.196
-
+origin: [-54.3, -11.449999999999989, 0.0]
+resolution: 0.05

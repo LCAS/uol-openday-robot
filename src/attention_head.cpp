@@ -2,6 +2,7 @@
 #include <cob_people_detection_msgs/DetectionArray.h>
 #include <iostream>
 #include <vector>
+#include <math.h>
 #include <sensor_msgs/JointState.h>
 
 
@@ -19,18 +20,17 @@ void locationCallback(const cob_people_detection_msgs::DetectionArray::ConstPtr&
         }
     }
     sensor_msgs::JointState state;
-    state.position.push_back(x);
-    state.position.push_back(y);
+    state.position.push_back(atan2(x,z);
+    state.position.push_back(atan2(y,z));
     state.header.stamp = detectionArray->header.stamp;
     state.header.frame_id = detectionArray->header.frame_id;
     listening_pub.publish(state);
 
-    sleep(2);
 }
 
 int main(int argc, char **argv) {
-    ros::init(argc, argv, "commanded_state");
-    ros::NodeHandle n("commanded_state");
+    ros::init(argc, argv, "attention_head");
+    ros::NodeHandle n("attention_head");
     ros::Subscriber sub = n.subscribe("/cob_people_detection/detection_tracker/face_position_array", 4, locationCallback);
     listening_pub = n.advertise<sensor_msgs::JointState>("/head/commanded_state", 10);
     ros::spin();

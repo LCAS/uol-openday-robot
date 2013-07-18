@@ -20,8 +20,8 @@ void locationCallback(const cob_people_detection_msgs::DetectionArray::ConstPtr&
         }
     }
     sensor_msgs::JointState state;
-    state.position.push_back(atan2(x,z);
-    state.position.push_back(atan2(y,z));
+    state.position.push_back(std::atan2(x,z));
+    state.position.push_back(std::atan2(y,z));
     state.header.stamp = detectionArray->header.stamp;
     state.header.frame_id = detectionArray->header.frame_id;
     listening_pub.publish(state);

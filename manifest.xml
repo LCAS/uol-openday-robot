@@ -1,0 +1,15 @@
+<package>
+  <description brief="listener_test">
+
+     listener_test
+
+  </description>
+  <author>Computing</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/listener_test</url>
+  <depend package="cob_people_detection"/>
+
+</package>
+
+

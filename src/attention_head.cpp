@@ -6,6 +6,7 @@
 #include <sensor_msgs/JointState.h>
 
 
+
 ros::Publisher listening_pub;
 
 void locationCallback(const cob_people_detection_msgs::DetectionArray::ConstPtr& detectionArray) {
@@ -20,8 +21,10 @@ void locationCallback(const cob_people_detection_msgs::DetectionArray::ConstPtr&
         }
     }
     sensor_msgs::JointState state;
-    state.position.push_back(std::atan2(x,z));
-    state.position.push_back(std::atan2(y,z));
+    state.name.push_back("HeadPan");
+    state.name.push_back("HeadTilt");
+    state.position.push_back(std::atan2(-x,z)*180.0/M_PI);
+    state.position.push_back(std::atan2(-y+0.3,z)*180.0/M_PI);
     state.header.stamp = detectionArray->header.stamp;
     state.header.frame_id = detectionArray->header.frame_id;
     listening_pub.publish(state);

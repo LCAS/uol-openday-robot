@@ -24,10 +24,24 @@ void vars::locationCallback(const cob_people_detection_msgs::DetectionArray::Con
         }
     }
 
-    if (((std::atan2(-x, z)*180.0 / M_PI) - (std::atan2(-last_x, last_z)*180.0 / M_PI) > 0.5) ||
-            ((std::atan2(-x, z)*180.0 / M_PI) - (std::atan2(-last_x, last_z)*180.0 / M_PI) < -0.5) ||
-            ((std::atan2(-y + 0.3, z)*180.0 / M_PI) - (std::atan2(-last_y + 0.3, last_z)*180.0 / M_PI) > 0.5) ||
-            ((std::atan2(-y + 0.3, z)*180.0 / M_PI) - (std::atan2(-last_y + 0.3, last_z)*180.0 / M_PI) < -0.5)) {
+    //if (((std::atan2(-x, z)*180.0 / M_PI) - (std::atan2(-last_x, last_z)*180.0 / M_PI) > 0.5) ||
+    //       ((std::atan2(-x, z)*180.0 / M_PI) - (std::atan2(-last_x, last_z)*180.0 / M_PI) < -0.5) ||
+    //       ((std::atan2(-y + 0.3, z)*180.0 / M_PI) - (std::atan2(-last_y + 0.3, last_z)*180.0 / M_PI) > 0.5) ||
+    //       ((std::atan2(-y + 0.3, z)*180.0 / M_PI) - (std::atan2(-last_y + 0.3, last_z)*180.0 / M_PI) < -0.5)) 
+
+    if (    (x - last_x > 0.3) ||
+            (x - last_x < -0.3) ||
+            
+            (y - last_y > 0.3) ||
+            (y - last_y < -0.3) ||
+            
+            (z - last_z > 0.3) ||
+            (z - last_z < -0.3))
+
+
+
+
+ {
         last_x = x;
         last_y = y;
         last_z = z;
@@ -45,14 +59,14 @@ void vars::locationCallback(const cob_people_detection_msgs::DetectionArray::Con
             state.header.frame_id = detectionArray->header.frame_id;
         }
         listening_pub.publish(state);
-        
-              std::cout << "1: " <<   (std::atan2(-x, z)*180.0 / M_PI)<< std::endl;
-                std::cout << "2: " <<(std::atan2(-last_x, last_z)*180.0 / M_PI)<< std::endl;
-        std::cout << "3: " <<((std::atan2(-x, z)*180.0 / M_PI) - (std::atan2(-last_x, last_z)*180.0 / M_PI))<< std::endl;
-        
-      // std::cout << "y,z:" << (std::atan2(-y + 0.3, z)*180.0 / M_PI) - (std::atan2(-y + 0.3, z)*180.0 / M_PI) << std::endl;
-       // std::cout << "x,z:" << (std::atan2(-x, z)*180.0 / M_PI) - (std::atan2(-last_x, last_z)*180.0 / M_PI) << std::endl;
-        
+
+        std::cout << "1: " << (std::atan2(-x, z)*180.0 / M_PI) << std::endl;
+        std::cout << "2: " << (std::atan2(-last_x, last_z)*180.0 / M_PI) << std::endl;
+        std::cout << "3: " << ((std::atan2(-x, z)*180.0 / M_PI) - (std::atan2(-last_x, last_z)*180.0 / M_PI)) << std::endl;
+
+        // std::cout << "y,z:" << (std::atan2(-y + 0.3, z)*180.0 / M_PI) - (std::atan2(-y + 0.3, z)*180.0 / M_PI) << std::endl;
+        // std::cout << "x,z:" << (std::atan2(-x, z)*180.0 / M_PI) - (std::atan2(-last_x, last_z)*180.0 / M_PI) << std::endl;
+
         std::cout << "----------" << std::endl;
     }
 }

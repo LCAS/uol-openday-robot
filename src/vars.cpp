@@ -1,5 +1,5 @@
 #include "vars.h"
-#include <sensor_msgs/JointState.h>
+
 
 vars::vars() {
     last_x = 0;
@@ -9,6 +9,7 @@ vars::vars() {
     //ros::Subscriber sub = 
     n.subscribe("/cob_people_detection/detection_tracker/face_position_array", 4, &vars::locationCallback,this);
     listening_pub = n.advertise<sensor_msgs::JointState>("/head/commanded_state", 10);
+        ros::spin();
 }
 
 void vars::locationCallback(const cob_people_detection_msgs::DetectionArray::ConstPtr& detectionArray) {

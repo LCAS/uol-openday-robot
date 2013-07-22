@@ -29,22 +29,19 @@ void vars::locationCallback(const cob_people_detection_msgs::DetectionArray::Con
     //       ((std::atan2(-y + 0.3, z)*180.0 / M_PI) - (std::atan2(-last_y + 0.3, last_z)*180.0 / M_PI) > 0.5) ||
     //       ((std::atan2(-y + 0.3, z)*180.0 / M_PI) - (std::atan2(-last_y + 0.3, last_z)*180.0 / M_PI) < -0.5)) 
 
-    if (    (x - last_x > 0.3) ||
+    if ((x - last_x > 0.3) ||
             (x - last_x < -0.3) ||
-            
+
             (y - last_y > 0.3) ||
             (y - last_y < -0.3) ||
-            
+
             (z - last_z > 0.3) ||
             (z - last_z < -0.3))
 
 
 
-
  {
-        last_x = x;
-        last_y = y;
-        last_z = z;
+
         sensor_msgs::JointState state;
         state.name.push_back("HeadPan");
         state.name.push_back("HeadTilt");
@@ -71,7 +68,9 @@ void vars::locationCallback(const cob_people_detection_msgs::DetectionArray::Con
         std::cout << "z - last_z: " << z - last_z << std::endl;
         // std::cout << "y,z:" << (std::atan2(-y + 0.3, z)*180.0 / M_PI) - (std::atan2(-y + 0.3, z)*180.0 / M_PI) << std::endl;
         // std::cout << "x,z:" << (std::atan2(-x, z)*180.0 / M_PI) - (std::atan2(-last_x, last_z)*180.0 / M_PI) << std::endl;
-
+        last_x = x;
+        last_y = y;
+        last_z = z;
         std::cout << "----------" << std::endl;
     }
 }

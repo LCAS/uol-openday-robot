@@ -9,8 +9,9 @@ class vars {
 public:
     double last_x, last_y, last_z;
     ros::Publisher listening_pub;
-    tf::TransformListener listener;
-    
+
+    ros::NodeHandle node;    
+    ros::Subscriber sub;
     void locationCallback(const cob_people_detection_msgs::DetectionArray::ConstPtr& detectionArray);
     vars();
 };

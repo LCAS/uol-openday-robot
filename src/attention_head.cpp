@@ -7,5 +7,7 @@
 int main(int argc, char **argv) {
     ros::init(argc, argv, "attention_head");
     vars h;
+std::cout << "main" << std::endl;
+    ros::spin();
     return 0;
 }

@@ -24,7 +24,7 @@ void locationCallback(const cob_people_detection_msgs::DetectionArray::ConstPtr&
         }
     }
     tf::StampedTransform transform;
-    listener.lookupTransform("/head_xtion_link", "/base_link", ros::Time(0), transform);
+    listener.lookupTransform("/head_xtion_depth_optical_frame", "/base_link", ros::Time(0), transform);
 
     x = transform.getOrigin().x();
     y = transform.getOrigin().y();

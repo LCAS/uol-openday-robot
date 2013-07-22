@@ -1,6 +1,6 @@
 <launch>
   <!-- Launch cob_people_detection and remap topics -->
-  <include file="$(find cob_people_detection)/ros/launch/people_detection.launch">
+  
         <remap from="/head_xtion/depth/disparity" to="/camera/depth/disparity"/>
         <remap from="/head_xtion/depth/image" to="/camera/depth/image"/>
         <remap from="/head_xtion/depth/image/compressed" to="/camera/depth/image/compressed"/>
@@ -173,5 +173,6 @@
         <remap from="/head_xtion/rgb/rectify_color/parameter_updates" to="/camera/rgb/rectify_color/parameter_updates"/>
         <remap from="/head_xtion/rgb/rectify_mono/parameter_descriptions" to="/camera/rgb/rectify_mono/parameter_descriptions"/>
         <remap from="/head_xtion/rgb/rectify_mono/parameter_updates" to="/camera/rgb/rectify_mono/parameter_updates"/>
+  <include file="$(find cob_people_detection)/ros/launch/people_detection.launch">
   </include>
 </launch> 

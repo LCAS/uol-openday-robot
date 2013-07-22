@@ -60,10 +60,15 @@ void vars::locationCallback(const cob_people_detection_msgs::DetectionArray::Con
         }
         listening_pub.publish(state);
 
-        std::cout << "1: " << (std::atan2(-x, z)*180.0 / M_PI) << std::endl;
-        std::cout << "2: " << (std::atan2(-last_x, last_z)*180.0 / M_PI) << std::endl;
-        std::cout << "3: " << ((std::atan2(-x, z)*180.0 / M_PI) - (std::atan2(-last_x, last_z)*180.0 / M_PI)) << std::endl;
-
+        std::cout << "x: " << x << std::endl;
+        std::cout << "y: " << y << std::endl;
+        std::cout << "z: " << z << std::endl;
+        std::cout << "last_x: " << x << std::endl;
+        std::cout << "last_y: " << y << std::endl;
+        std::cout << "last_z: " << z << std::endl;
+        std::cout << "x - last_x: " << x - last_x << std::endl;
+        std::cout << "y - last_y: " << y - last_y << std::endl;
+        std::cout << "z - last_z: " << z - last_z << std::endl;
         // std::cout << "y,z:" << (std::atan2(-y + 0.3, z)*180.0 / M_PI) - (std::atan2(-y + 0.3, z)*180.0 / M_PI) << std::endl;
         // std::cout << "x,z:" << (std::atan2(-x, z)*180.0 / M_PI) - (std::atan2(-last_x, last_z)*180.0 / M_PI) << std::endl;
 

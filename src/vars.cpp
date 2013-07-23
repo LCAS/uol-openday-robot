@@ -28,7 +28,12 @@ void vars::locationCallback(const cob_people_detection_msgs::DetectionArray::Con
     }
 
     poseInCamCoords.header.frame_id = "/head_xtion_depth_optical_frame";
-    listener.transformPose("/head_base_frame", poseInCamCoords, poseInRobotCoords);
+    try {
+        listener.transformPose("/head_base_frame", poseInCamCoords, poseInRobotCoords);
+    } catch (tf::TransformException ex) {
+        ROS_ERROR("%s", ex.what());
+    }
+
     x = poseInRobotCoords.pose.position.x;
     y = poseInRobotCoords.pose.position.y;
     z = poseInRobotCoords.pose.position.z;
@@ -40,8 +45,7 @@ void vars::locationCallback(const cob_people_detection_msgs::DetectionArray::Con
             (y - last_y > threshold) ||
             (y - last_y < -threshold) ||
             (z - last_z > threshold) ||
-            (z - last_z < -threshold)) 
-    {
+            (z - last_z < -threshold)) {
         sensor_msgs::JointState state;
         state.name.push_back("HeadPan");
         state.name.push_back("HeadTilt");

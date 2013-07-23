@@ -4,11 +4,14 @@
 #include <cob_people_detection_msgs/DetectionArray.h>
 #include <iostream>
 #include <sensor_msgs/JointState.h>
+#include <tf/transform_listener.h>
 
 class vars {
 public:
     double last_x, last_y, last_z;
+    double x,y,z;
     ros::Publisher listening_pub;
+    tf::TransformListener listener;
 
     ros::NodeHandle node;    
     ros::Subscriber sub;

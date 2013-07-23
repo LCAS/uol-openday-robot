@@ -16,28 +16,22 @@ vars::vars() : node("attention_head") {
 
 void vars::locationCallback(const cob_people_detection_msgs::DetectionArray::ConstPtr& detectionArray) {
     z = 15;
+
+    geometry_msgs::PoseStamped poseInCamCoords;
+    geometry_msgs::PoseStamped poseInRobotCoords;
+
     for (unsigned i = 0; i < detectionArray->detections.size(); i++) {
 
         if (detectionArray->detections[i].pose.pose.position.z < z) {
-            x = detectionArray->detections[i].pose.pose.position.x;
-            y = detectionArray->detections[i].pose.pose.position.y;
-            z = detectionArray->detections[i].pose.pose.position.z;
+            poseInCamCoords = detectionArray->detections[i].pose;
         }
     }
-  tf::StampedTransform transform;
-    try {
-        listener.lookupTransform("/head_xtion_depth_optical_frame", "/base_link",
-                ros::Time(0), transform);
-    } catch (tf::TransformException ex) {
-        std::cout << "something went wrong... We're working on it..." << std::endl;
-    }
 
-    std::cout << "x:" << x << std::endl;
-    std::cout << "y:" << y << std::endl;
-    std::cout << "z:" << z << std::endl;
-    std::cout << "Tx:" << transform.getOrigin().x() << std::endl;
-    std::cout << "Ty:" << transform.getOrigin().x() << std::endl;
-    std::cout << "Tz:" << transform.getOrigin().x() << std::endl;
+    poseInCamCoords.header.frame_id = "/head_xtion_depth_optical_frame";
+    listener.transformPose("/head_base_frame", poseInCamCoords, poseInRobotCoords);
+    x = poseInRobotCoords.pose.position.x;
+    y = poseInRobotCoords.pose.position.y;
+    z = poseInRobotCoords.pose.position.z;
 
 
     double threshold = 0.2;
@@ -46,21 +40,14 @@ void vars::locationCallback(const cob_people_detection_msgs::DetectionArray::Con
             (y - last_y > threshold) ||
             (y - last_y < -threshold) ||
             (z - last_z > threshold) ||
-            (z - last_z < -threshold)) {
-
+            (z - last_z < -threshold)) 
+    {
         sensor_msgs::JointState state;
         state.name.push_back("HeadPan");
         state.name.push_back("HeadTilt");
-
-        state.position.push_back(std::atan2(-x, z)*180.0 / M_PI);
-        state.position.push_back(std::atan2(-y + 0.3, z)*180.0 / M_PI);
+        state.position.push_back(std::atan2(y, x)*180.0 / M_PI);
+        state.position.push_back(std::atan2(z, x)*180.0 / M_PI);
         state.header.stamp = detectionArray->header.stamp;
-
-        if (detectionArray->header.frame_id == "") {
-            state.header.frame_id = "/head_xtion";
-        } else {
-            state.header.frame_id = detectionArray->header.frame_id;
-        }
         listening_pub.publish(state);
         last_x = x;
         last_y = y;

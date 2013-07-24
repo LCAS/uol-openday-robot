@@ -1,39 +1,35 @@
 #include "vars.h"
 
-vars::vars() : node("attention_head") {
-    //previous coordiantes
-    last_x = 0;
-    last_y = 0;
-    last_z = 15;
-    //current coordinates
-    x = 0;
-    y = 0;
-    z = 0;
-    //subscriber feel to get input from cob_people_detection
-    sub = node.subscribe("/cob_people_detection/detection_tracker/face_position_array", 4, &vars::locationCallback, this);
-    listening_pub = node.advertise<sensor_msgs::JointState>("/head/commanded_state", 10);
+void vars::executeCB(const uol_openday_common::Find_peopleGoalConstPtr &goal)
+{
+	boost::lock_guard<boost::mutex> lock(mutex);
+	bool success = true;
+std::cout << "Success" << std::endl;
+
+
 }
 
 void vars::locationCallback(const cob_people_detection_msgs::DetectionArray::ConstPtr& detectionArray) {
     z = 15;
-    
-    bool found=false;
+
+    bool found = false;
     geometry_msgs::PoseStamped poseInCamCoords;
     geometry_msgs::PoseStamped poseInRobotCoords;
 
     for (unsigned i = 0; i < detectionArray->detections.size(); i++) {
 
         if (detectionArray->detections[i].pose.pose.position.z < z) {
-z =detectionArray->detections[i].pose.pose.position.z;         
-   poseInCamCoords = detectionArray->detections[i].pose;
-poseInCamCoords.pose.orientation.w =1.0;
-poseInCamCoords.pose.position.x*=-1.0;
-poseInCamCoords.pose.position.y*=-1.0;
-            found=true;
+            z = detectionArray->detections[i].pose.pose.position.z;
+            poseInCamCoords = detectionArray->detections[i].pose;
+            poseInCamCoords.pose.orientation.w = 1.0;
+            poseInCamCoords.pose.position.x *= -1.0;
+            poseInCamCoords.pose.position.y *= -1.0;
+            found = true;
         }
     }
-    if (!found)
-	return;
+    if (!found) {
+        return;
+    }
     poseInCamCoords.header.frame_id = "/head_xtion_rgb_optical_frame";
     try {
         listener.transformPose("/head_base_frame", poseInCamCoords, poseInRobotCoords);
@@ -41,11 +37,12 @@ poseInCamCoords.pose.position.y*=-1.0;
         ROS_ERROR("%s", ex.what());
 
     }
-
-    x = poseInRobotCoords.pose.position.x;
-    y = poseInRobotCoords.pose.position.y;
-    z = poseInRobotCoords.pose.position.z;
-
+    {
+        boost::lock_guard<boost::mutex> lock(mutex);
+        x = poseInRobotCoords.pose.position.x;
+        y = poseInRobotCoords.pose.position.y;
+        z = poseInRobotCoords.pose.position.z;
+    }
 
     double threshold = 0.1;
     if ((x - last_x > threshold) ||
@@ -66,3 +63,4 @@ poseInCamCoords.pose.position.y*=-1.0;
         last_z = z;
     }
 }
+

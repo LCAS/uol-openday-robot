@@ -9,6 +9,7 @@
 #include <boost/thread.hpp>
 #include "uol_openday_common/Find_peopleAction.h"
 #include <actionlib/server/simple_action_server.h>
+#include <ros/time.h>
 
 class vars
 {

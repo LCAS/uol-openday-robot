@@ -1,20 +1,20 @@
 #include "vars.h"
 
-void vars::executeCB(const uol_openday_common::Find_peopleGoalConstPtr &goal)
-{
-	boost::lock_guard<boost::mutex> lock(mutex);
-	bool success = true;
-result_.targetPoint.x = x;
-result_.targetPoint.y = y;
-result_.targetPoint.z = z;
-	as_.setSucceeded(result_);
+void vars::executeCB(const uol_openday_common::Find_peopleGoalConstPtr &goal) {
 
-std::cout << "Success" << std::endl;
+    ros::Time end = ros::Time::now();
+    end.sec += goal->time;
 
-
+    do {
+        boost::lock_guard<boost::mutex> lock(mutex);
+        feedback_.targetPoint.x = x;
+        feedback_.targetPoint.y = y;
+        feedback_.targetPoint.z = z;
+        as_.publishFeedback(feedback_);
+    } while (ros::Time::now() < end);
 }
 
-void vars::locationCallback(const cob_people_detection_msgs::DetectionArray::ConstPtr& detectionArray) {
+void vars::locationCallback(const cob_people_detection_msgs::DetectionArray::ConstPtr & detectionArray) {
     z = 15;
 
     bool found = false;

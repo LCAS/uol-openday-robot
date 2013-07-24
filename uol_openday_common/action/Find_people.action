@@ -1,5 +1,7 @@
-
+#goal definition
 ---
-
----
+#result definition
 geometry_msgs/Point32 targetPoint
+---
+#feedback
+

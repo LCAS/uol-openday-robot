@@ -23,6 +23,7 @@ void vars::locationCallback(const cob_people_detection_msgs::DetectionArray::Con
     for (unsigned i = 0; i < detectionArray->detections.size(); i++) {
 
         if (detectionArray->detections[i].pose.pose.position.z < z) {
+            z = detectionArray->detections[i].pose.pose.position.z;
             poseInCamCoords = detectionArray->detections[i].pose;
         }
     }
@@ -30,7 +31,7 @@ void vars::locationCallback(const cob_people_detection_msgs::DetectionArray::Con
     poseInCamCoords.header.frame_id = "/head_xtion_depth_optical_frame";
     try {
         listener.transformPose("/head_base_frame", poseInCamCoords, poseInRobotCoords);
-    } catch (tf::TransformException ex) {
+    } catch (tf::TransformException& ex) {
         ROS_ERROR("%s", ex.what());
     }
 

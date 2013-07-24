@@ -4,6 +4,11 @@ void vars::executeCB(const uol_openday_common::Find_peopleGoalConstPtr &goal)
 {
 	boost::lock_guard<boost::mutex> lock(mutex);
 	bool success = true;
+result_.targetPoint.x = x;
+result_.targetPoint.y = y;
+result_.targetPoint.z = z;
+	as_.setSucceeded(result_);
+
 std::cout << "Success" << std::endl;
 
 

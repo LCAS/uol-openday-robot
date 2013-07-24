@@ -7,7 +7,7 @@ import tf
 import time
 import math 
 
-from uol_action_openday.msg import *
+from patroller.msg import *
 from random import randrange, randint
 
 from geometry_msgs.msg import Twist
@@ -27,12 +27,12 @@ findPeople = actionlib.SimpleActionClient('find_people', Find_peopleAction)
 
 
 
-class DoDishesServer:
+class PatrollerServer:
 
 	
 
 	def __init__(self):
-		self.server = actionlib.SimpleActionServer('patroller', DoDishesAction, self.execute, False)
+		self.server = actionlib.SimpleActionServer('patroller', patrolAction, self.execute, False)
 		self.server.start()
 		rospy.Subscriber("/find_people/feedback", Find_peopleActionFeedback, self.callback) 
 		self.pub = rospy.Publisher('/cmd_vel', Twist)
@@ -109,6 +109,6 @@ class DoDishesServer:
 
 
 if __name__ == '__main__':
-	rospy.init_node('do_dishes_server')
-	server = DoDishesServer()
+	rospy.init_node('patroller')
+	server = PatrollerServer()
 	rospy.spin()

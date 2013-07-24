@@ -28,9 +28,10 @@ protected:
 	ros::Subscriber sub;
 	tf::TransformListener listener;
 	boost::mutex mutex;
+	bool first_notfound;
 
 public:
-
+	
 	vars(std::string name) :
 	as_(nh_, name, boost::bind(&vars::executeCB, this, _1), false),
 	action_name_(name)
@@ -47,7 +48,8 @@ public:
 		//subscriber feel to get input from cob_people_detection
 		sub = nh_.subscribe("/cob_people_detection/detection_tracker/face_position_array", 4, &vars::locationCallback, this);
 		listening_pub = nh_.advertise<sensor_msgs::JointState>("/head/commanded_state", 10);
-	}
+		first_notfound=true;
+}
 
 	~vars(void)
 	{

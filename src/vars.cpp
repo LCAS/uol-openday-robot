@@ -19,6 +19,7 @@ void vars::locationCallback(const cob_people_detection_msgs::DetectionArray::Con
     z = 15;
 
     bool found = false;
+	
     geometry_msgs::PoseStamped poseInCamCoords;
     geometry_msgs::PoseStamped poseInRobotCoords;
 
@@ -31,11 +32,21 @@ void vars::locationCallback(const cob_people_detection_msgs::DetectionArray::Con
             poseInCamCoords.pose.position.x *= -1.0;
             poseInCamCoords.pose.position.y *= -1.0;
             found = true;
+			first_notfound = true;
+			
         }
     }
-    if (!found) {
-        return;
-    }
+
+	if (!found){
+			if(first_notfound)
+				{
+					first_notfound=false;
+					x = 0;
+					y = 0;
+					z = 0;
+				}else {return;}
+	}
+
     poseInCamCoords.header.frame_id = "/head_xtion_rgb_optical_frame";
     try {
         listener.transformPose("/head_base_frame", poseInCamCoords, poseInRobotCoords);

@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-import roslib; roslib.load_manifest('patroller');
+import roslib; roslib.load_manifest('patroller'); roslib.load_manifest('ros_mary_tts');
 import rospy
 import actionlib
 import tf

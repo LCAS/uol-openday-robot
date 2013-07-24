@@ -1,0 +1,10 @@
+<launch>
+
+
+    <node name="patroller" pkg="patroller" type="$(find strands_morse)/pydev/scripts/ODayPatroller.py">
+	 <param name="waypoints" value="$(find strands_morse)/pydev/waypoints.csv" />
+    </node>	
+
+
+
+</launch>

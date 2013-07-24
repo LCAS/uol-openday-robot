@@ -1,0 +1,8 @@
+# Define the goal
+uint32 mary_seconds
+uint32 find_seconds
+string location
+---
+# Define the result
+---
+# Define a feedback message

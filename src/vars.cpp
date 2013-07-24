@@ -12,6 +12,7 @@ void vars::executeCB(const uol_openday_common::Find_peopleGoalConstPtr &goal) {
         feedback_.targetPoint.z = z;
         as_.publishFeedback(feedback_);
     } while (ros::Time::now() < end);
+as_.setSucceeded(result_);
 }
 
 void vars::locationCallback(const cob_people_detection_msgs::DetectionArray::ConstPtr & detectionArray) {

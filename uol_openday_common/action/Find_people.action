@@ -1,7 +1,7 @@
 #goal definition
+int32 time
 ---
 #result definition
-geometry_msgs/Point32 targetPoint
 ---
 #feedback
-
+geometry_msgs/Point32 targetPoint

@@ -18,7 +18,7 @@ from ros_mary_tts.srv import *
 from ros_mary_tts.msg import *
 
 from uol_openday_common.msg import *
-from my_first_patroller.msg import *
+from uol_patroller.msg import *
 
 
 marySpeak = actionlib.SimpleActionClient('speak', maryttsAction)

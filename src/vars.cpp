@@ -2,7 +2,7 @@
 
 void vars::executeCB(const uol_openday_common::Find_peopleGoalConstPtr &goal) {
 
-    ros::Time end = ros::Time::now();
+    end = ros::Time::now();
     end.sec += goal->time;
 
     do {
@@ -15,7 +15,18 @@ void vars::executeCB(const uol_openday_common::Find_peopleGoalConstPtr &goal) {
         as_.publishFeedback(feedback_);
 		ros::Duration(0.1).sleep();
     } while (ros::Time::now() < end);
+	feedback_.targetPoint.x = 0;
+        feedback_.targetPoint.y = 0;
+        feedback_.targetPoint.z = 0;
 as_.setSucceeded(result_);
+}
+
+void vars::preemptCB()
+{
+    	ROS_INFO("%s: Preempted", action_name_.c_str());
+    	// set the action state to preempted
+	end = ros::Time::now();
+	as_.setPreempted();
 }
 
 void vars::locationCallback(const cob_people_detection_msgs::DetectionArray::ConstPtr & detectionArray) {

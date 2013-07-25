@@ -29,6 +29,7 @@ protected:
 	tf::TransformListener listener;
 	boost::mutex mutex;
 	bool first_notfound;
+	ros::Time end;
 
 public:
 	
@@ -36,6 +37,7 @@ public:
 	as_(nh_, name, boost::bind(&vars::executeCB, this, _1), false),
 	action_name_(name)
 	{
+		as_.registerPreemptCallback(boost::bind(&vars::preemptCB, this));		
 		as_.start();
 		//previous coordiantes
 		last_x = 0;
@@ -56,6 +58,7 @@ public:
 	}
 
 	void executeCB(const uol_openday_common::Find_peopleGoalConstPtr &goal);
+	void preemptCB();
 	void locationCallback(const cob_people_detection_msgs::DetectionArray::ConstPtr& detectionArray);
 
 

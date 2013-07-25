@@ -36,12 +36,13 @@ class EngageServer:
 		self.server.start()
 		rospy.Subscriber("/find_people/feedback", Find_peopleActionFeedback, self.callback) 
 		self.pub = rospy.Publisher('/cmd_vel', Twist)
+		self.file_name = speech_name
 
 
 	def callback(self, fb): 
 		# spin the base
 		# turning speed
-		print fb
+		rospy.loginfo("Looking for people.")
 		twist = Twist()
 		twist.angular.z = math.atan2(fb.feedback.targetPoint.y,fb.feedback.targetPoint.x)*0.5
 		self.pub.publish(twist)
@@ -65,7 +66,7 @@ class EngageServer:
 		rospy.logdebug(rospy.get_name() + " setting up")
 		
 
-		File = open(speech_name)
+		File = open(self.file_name)
 		scriptLine = []
 		
 		while 1:

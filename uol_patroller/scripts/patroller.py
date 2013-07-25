@@ -149,6 +149,8 @@ class PointReader(smach.State):
 	print 'Heading to the waypoint %s.' % current_row[0]
 	curLocation = current_row[0]
 	self.current_point=self.current_point+1
+	print self.current_point
+	print current_row
 	if self.current_point==self.n_points:
 		self.current_point=0
 

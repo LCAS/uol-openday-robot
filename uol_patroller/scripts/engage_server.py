@@ -36,7 +36,6 @@ class EngageServer:
 		self.server.start()
 		rospy.Subscriber("/find_people/feedback", Find_peopleActionFeedback, self.callback) 
 		self.pub = rospy.Publisher('/cmd_vel', Twist)
-		self.seech_name = speech_name
 
 
 	def callback(self, fb): 
@@ -66,7 +65,7 @@ class EngageServer:
 		rospy.logdebug(rospy.get_name() + " setting up")
 		
 
-		File = open(self.speech_name)
+		File = open(speech_name)
 		scriptLine = []
 		
 		while 1:

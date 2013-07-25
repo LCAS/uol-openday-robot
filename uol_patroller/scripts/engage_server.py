@@ -31,11 +31,12 @@ class EngageServer:
 
 	
 
-	def __init__(self):
+	def __init__(self, speech_name):
 		self.server = actionlib.SimpleActionServer('uol_patroller/engage', patrolAction, self.execute, False)
 		self.server.start()
 		rospy.Subscriber("/find_people/feedback", Find_peopleActionFeedback, self.callback) 
 		self.pub = rospy.Publisher('/cmd_vel', Twist)
+		self.seech_name = speech_name
 
 
 	def callback(self, fb): 
@@ -65,7 +66,7 @@ class EngageServer:
 		rospy.logdebug(rospy.get_name() + " setting up")
 		
 
-		File = open("/home/strands/catkin_ws/src/uol_action_openday/pydev/scripts/voiceScript.txt")
+		File = open(self.speech_name)
 		scriptLine = []
 		
 		while 1:
@@ -107,7 +108,14 @@ class EngageServer:
 		self.server.set_succeeded()
 
 
-if __name__ == '__main__':
+def main():
 	rospy.init_node('engage_server')
-	server = EngageServer()
+	if len(sys.argv)<2:
+		rospy.logerr("No waypoints file given. Use rosrun waypoint_patroller patroller.py [path to csv waypoints file]. If you are using a launch file, see launch/patroller.launch for an example.")
+		
+	speech_name=sys.argv[1]
+	server = EngageServer(speech_name)
 	rospy.spin()
+
+if __name__ == '__main__':
+	main()

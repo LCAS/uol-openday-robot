@@ -52,6 +52,7 @@ class EngagePeople(smach.State):
 		print "Should hang until completion"
 		self.client.wait_for_result(rospy.Duration.from_sec(0.0))
 		print "Did I?"
+		result=self.client.get_state()
 
 		if result != GoalStatus.SUCCEEDED:
 			return 'failure'

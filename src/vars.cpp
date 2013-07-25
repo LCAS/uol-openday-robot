@@ -8,9 +8,9 @@ void vars::executeCB(const uol_openday_common::Find_peopleGoalConstPtr &goal) {
     do {
 {
         boost::lock_guard<boost::mutex> lock(mutex);
-        feedback_.targetPoint.x = x;
-        feedback_.targetPoint.y = y;
-        feedback_.targetPoint.z = z;
+        feedback_.targetPoint.x = thread_x;
+        feedback_.targetPoint.y = thread_y;
+        feedback_.targetPoint.z = thread_z;
 }
         as_.publishFeedback(feedback_);
 		ros::Duration(0.1).sleep();
@@ -68,12 +68,17 @@ void vars::locationCallback(const cob_people_detection_msgs::DetectionArray::Con
         ROS_ERROR("%s", ex.what());
 
     }
-    {
-        boost::lock_guard<boost::mutex> lock(mutex);
+
         x = poseInRobotCoords.pose.position.x;
         y = poseInRobotCoords.pose.position.y;
         z = poseInRobotCoords.pose.position.z;
-    }
+
+{    
+        boost::lock_guard<boost::mutex> lock(mutex);
+		thread_x = x;
+		thread_y = y;
+		thread_z = z;
+}
 
     double threshold = 0.1;
     if ((x - last_x > threshold) ||

@@ -24,6 +24,7 @@ protected:
 	uol_openday_common::Find_peopleResult result_;
 	double last_x, last_y, last_z;
 	double x, y, z;
+	double thread_x, thread_y, thread_z;
 	ros::Publisher listening_pub;
 	ros::Subscriber sub;
 	tf::TransformListener listener;

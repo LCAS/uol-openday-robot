@@ -50,8 +50,6 @@ class EngageServer:
 	def execute(self, goal):
 		self.count = 5
 		# Call Headspin Service 360
-		turn = randint(0,359)	
-		print "Person detected with kinect %i degrees off current position." % turn
 		
 		myBool = False			
 		startTime = time.time()
@@ -99,8 +97,8 @@ class EngageServer:
 			marySpeak.wait_for_result(rospy.Duration.from_sec(0.0))
 
 			rospy.sleep(5)					
-			if time.time() - startTime > goal.mary_seconds:
-				myBool = True
+			#if time.time() - startTime > goal.mary_seconds:
+			myBool = True
 					#monitor person finder and engage for returning finish command 
 					#if round((time.time() - startTime)*1000)
 		

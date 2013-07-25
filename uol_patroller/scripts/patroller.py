@@ -140,10 +140,10 @@ class PointReader(smach.State):
 	next_goal.target_pose.pose.position.x=current_row[1]
 	next_goal.target_pose.pose.position.y=current_row[2]
 	next_goal.target_pose.pose.position.z=current_row[3]
-	next_goal.target_pose.pose.orientation.x=0.0000000000
-	next_goal.target_pose.pose.orientation.y=0.0000000000
-	next_goal.target_pose.pose.orientation.z=-0.7268487981
-	next_goal.target_pose.pose.orientation.w=0.6867975135
+	next_goal.target_pose.pose.orientation.x=0.0000000000 if len(current_row) == 4 else current_row[4]
+	next_goal.target_pose.pose.orientation.y=0.0000000000 if len(current_row) == 4 else current_row[5]
+	next_goal.target_pose.pose.orientation.z=-0.7268487981 if len(current_row) == 4 else current_row[6]
+	next_goal.target_pose.pose.orientation.w=0.6867975135 if len(current_row) == 4 else current_row[7]
 	
 	print 'Heading to the waypoint %s.' % current_row[0]
 	curLocation = current_row[0]

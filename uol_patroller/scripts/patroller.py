@@ -116,7 +116,7 @@ class PointReader(smach.State):
 					current_row.append(float(element))
 				except:
 					current_row.append(str(element))
-				self.points.append(current_row)
+			self.points.append(current_row)
 
 	
 	self.current_point=0
@@ -134,8 +134,6 @@ class PointReader(smach.State):
 
 
 	next_goal = move_base_msgs.msg.MoveBaseGoal()
-	print self.points
-	print self.points[self.current_point]
 	current_row=self.points[self.current_point]
 	next_goal.target_pose.header.frame_id = frame_id
 	next_goal.target_pose.header.stamp = rospy.Time.now()
@@ -150,8 +148,6 @@ class PointReader(smach.State):
 	print 'Heading to the waypoint %s.' % current_row[0]
 	curLocation = current_row[0]
 	self.current_point=self.current_point+1
-	print self.current_point
-	print current_row
 	if self.current_point==self.n_points:
 		self.current_point=0
 

@@ -4,7 +4,7 @@ import time
 import rospy
 import csv
 
-import roslib; roslib.load_manifest('uol_action_openday')
+import roslib; roslib.load_manifest('uol_patroller')
 import actionlib
 from random import randrange, randint
 import smach
@@ -22,7 +22,7 @@ from uol_action_openday.msg import *
 frame_id="/map"
 
 
-client = actionlib.SimpleActionClient('do_dishes', DoDishesAction)
+client = actionlib.SimpleActionClient('uol_patroller', patrolAction)
 
 
 curLocation = ""
@@ -69,7 +69,7 @@ class GoTo(smach.State):
 	#	State 
 	
 	client.wait_for_server() 	# establish TCP
-	goal = DoDishesGoal()		# Define action
+	goal = patrolGoal()		# Define action
 	goal.seconds = randrange(10,30)	# talk for random time
 	goal.location = curLocation
 

@@ -1,13 +1,12 @@
 #! /usr/bin/env python
 
-import roslib; roslib.load_manifest('patroller'); roslib.load_manifest('ros_mary_tts');
+import roslib; roslib.load_manifest('uol_patroller'); roslib.load_manifest('ros_mary_tts');
 import rospy
 import actionlib
 import tf
 import time
 import math 
 
-from patroller.msg import *
 from random import randrange, randint
 
 from geometry_msgs.msg import Twist
@@ -19,6 +18,7 @@ from ros_mary_tts.srv import *
 from ros_mary_tts.msg import *
 
 from uol_openday_common.msg import *
+from my_first_patroller.msg import *
 
 
 marySpeak = actionlib.SimpleActionClient('speak', maryttsAction)
@@ -27,12 +27,12 @@ findPeople = actionlib.SimpleActionClient('find_people', Find_peopleAction)
 
 
 
-class PatrollerServer:
+class EngageServer:
 
 	
 
 	def __init__(self):
-		self.server = actionlib.SimpleActionServer('patroller', patrolAction, self.execute, False)
+		self.server = actionlib.SimpleActionServer('uol_patroller/engage', patrolAction, self.execute, False)
 		self.server.start()
 		rospy.Subscriber("/find_people/feedback", Find_peopleActionFeedback, self.callback) 
 		self.pub = rospy.Publisher('/cmd_vel', Twist)
@@ -43,8 +43,7 @@ class PatrollerServer:
 		# turning speed
 		print fb
 		twist = Twist()
-		twist.angular.z = -math.atan2(fb.feedback.targetPoint.y,fb.feedback.targetPoint.x)*0.3
-		#twist.angular.z = -math.atan2(fb.feedback.targetPoint.y,fb.feedback.targetPoint.x)*0.3
+		twist.angular.z = -math.atan2(fb.feedback.targetPoint.y,fb.feedback.targetPoint.x)*0.5
 		self.pub.publish(twist)
 
 	def execute(self, goal):
@@ -109,6 +108,6 @@ class PatrollerServer:
 
 
 if __name__ == '__main__':
-	rospy.init_node('patroller')
-	server = PatrollerServer()
+	rospy.init_node('my_first_patroller')
+	server = EngageServer()
 	rospy.spin()

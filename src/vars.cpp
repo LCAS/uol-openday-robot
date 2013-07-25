@@ -6,11 +6,14 @@ void vars::executeCB(const uol_openday_common::Find_peopleGoalConstPtr &goal) {
     end.sec += goal->time;
 
     do {
+{
         boost::lock_guard<boost::mutex> lock(mutex);
         feedback_.targetPoint.x = x;
         feedback_.targetPoint.y = y;
         feedback_.targetPoint.z = z;
+}
         as_.publishFeedback(feedback_);
+		ros::Duration(0.1).sleep();
     } while (ros::Time::now() < end);
 as_.setSucceeded(result_);
 }

@@ -15,7 +15,7 @@ from smach_ros import SimpleActionState
 import actionlib
 from actionlib_msgs.msg import *
 from move_base_msgs.msg import *
-from uol_action_openday.msg import *
+from uol_patroller.msg import *
 
 
 
@@ -164,13 +164,16 @@ def main():
     frame_id="/map"
 
 
-    file_name='/home/strands/catkin_ws/src/uol_action_openday/pydev/scripts/waypoints.cvs'
+    if len(sys.argv)<2:
+      rospy.logerr("No waypoints file given. Use rosrun waypoint_patroller patroller.py [path to csv waypoints file]. If you are using a launch file, see launch/patroller.launch for an example.")
+    #'/home/strands/catkin_ws/src/uol_action_openday/pydev/scripts/waypoints.cvs'
+    waypoints_name=sys.argv[1]
 
 
     # Create a SMACH state machine
     sm = smach.StateMachine(['succeeded','aborted','preempted'])
     with sm:
-        smach.StateMachine.add('POINT_READER', PointReader(file_name), 
+        smach.StateMachine.add('POINT_READER', PointReader(waypoints_name), 
                                transitions={'goto_point':'GOING_TO_POINT'},
                                remapping={'goal_pose':'goal_pose'})
 

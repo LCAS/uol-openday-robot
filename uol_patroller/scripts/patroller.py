@@ -21,17 +21,48 @@ from uol_patroller.msg import *
 
 frame_id="/map"
 
-
-client = actionlib.SimpleActionClient('uol_patroller', patrolAction)
-
-
 curLocation = ""
+
+class EngagePeople(smach.State):
+    def __init__(self):
+        smach.State.__init__(self,
+            outcomes    = ['success', 'failure'],
+            input_keys=['goal_reached']
+            
+        )
+        
+    def execute(self,userdata):
+
+		rospy.loginfo("Engaging people.")
+		if rospy.is_shutdown(): # Exiting gracefully when ctrl-c is pressed
+			return 'abort'
+
+		rospy.loginfo("Creating engagement client.")
+		self.client = actionlib.SimpleActionClient('uol_patroller/engage', patrolAction)
+		self.client.wait_for_server()
+		rospy.loginfo("Engage client initialized")
+		goal = patrolGoal()		# Define action
+		goal.find_seconds = 60	# talk for random time
+		goal.mary_seconds = 30
+		goal.location = curLocation
+
+		# Fill in the goal here
+		self.client.send_goal(goal)
+
+		print "Should hang until completion"
+		self.client.wait_for_result(rospy.Duration.from_sec(0.0))
+		print "Did I?"
+
+		if result != GoalStatus.SUCCEEDED:
+			return 'failure'
+		return 'success'
 
 class GoTo(smach.State):
     def __init__(self):
         smach.State.__init__(self,
             outcomes    = ['success', 'failure'],
-            input_keys=['goal_pose']
+            input_keys=['goal_pose'],
+            output_keys=['goal_reached']
             
         )
 	
@@ -57,28 +88,8 @@ class GoTo(smach.State):
         result=self.baseClient.get_state()
         
 
-    #    while result == GoalStatus.PENDING or result == GoalStatus.ACTIVE:
-     #       result=self.baseClient.get_state()
-      #      if rospy.is_shutdown(): # Exiting gracefully when ctrl-c is pressed
-       #         return 'abort'
-
         if result != GoalStatus.SUCCEEDED:
             return 'failure'
-
-        # 	ARRIVED AT POINT 
-	#	State 
-	
-	client.wait_for_server() 	# establish TCP
-	goal = patrolGoal()		# Define action
-	goal.seconds = randrange(10,30)	# talk for random time
-	goal.location = curLocation
-
-	# Fill in the goal here
-	client.send_goal(goal)
-
-	print "Should hang until completion"
-	client.wait_for_result(rospy.Duration.from_sec(0.0))
-	print "Did I?"
 
         return 'success'
 
@@ -96,7 +107,7 @@ class PointReader(smach.State):
 
 	self.points=[]
 	with open(file_name, 'rb') as csvfile:
-	     	reader = csv.reader(csvfile, delimiter=',')
+		reader = csv.reader(csvfile, delimiter=',')
 		for row in reader:
 			current_row=[]
 			for element in row:
@@ -104,7 +115,7 @@ class PointReader(smach.State):
 					current_row.append(float(element))
 				except:
 					current_row.append(str(element))
-        		self.points.append(current_row)
+				self.points.append(current_row)
 
 	
 	self.current_point=0
@@ -159,7 +170,7 @@ class PointReader(smach.State):
 def main():
 
 
-    rospy.init_node('patroller')
+    rospy.init_node('uol_patroller')
 
     frame_id="/map"
 
@@ -178,7 +189,11 @@ def main():
                                remapping={'goal_pose':'goal_pose'})
 
         smach.StateMachine.add('GOING_TO_POINT', GoTo(), 
-                               transitions={'success':'POINT_READER','failure':'aborted'},
+                               transitions={'success':'ENGAGING_PEOPLE','failure':'aborted'},
+                               remapping={'goal_pose':'goal_pose'})
+                               
+        smach.StateMachine.add('ENGAGING_PEOPLE', EngagePeople(), 
+                               transitions={'success':'POINT_READER','failure':'POINT_READER'},
                                remapping={'goal_pose':'goal_pose'})
 
 

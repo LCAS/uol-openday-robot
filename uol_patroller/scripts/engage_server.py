@@ -43,7 +43,7 @@ class EngageServer:
 		# turning speed
 		print fb
 		twist = Twist()
-		twist.angular.z = -math.atan2(fb.feedback.targetPoint.y,fb.feedback.targetPoint.x)*0.5
+		twist.angular.z = math.atan2(fb.feedback.targetPoint.y,fb.feedback.targetPoint.x)*0.5
 		self.pub.publish(twist)
 
 	def execute(self, goal):
@@ -108,6 +108,6 @@ class EngageServer:
 
 
 if __name__ == '__main__':
-	rospy.init_node('my_first_patroller')
+	rospy.init_node('engage_server')
 	server = EngageServer()
 	rospy.spin()

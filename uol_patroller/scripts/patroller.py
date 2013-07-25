@@ -134,7 +134,8 @@ class PointReader(smach.State):
 
 
 	next_goal = move_base_msgs.msg.MoveBaseGoal()
-
+	print self.points
+	print self.points[self.current_point]
 	current_row=self.points[self.current_point]
 	next_goal.target_pose.header.frame_id = frame_id
 	next_goal.target_pose.header.stamp = rospy.Time.now()

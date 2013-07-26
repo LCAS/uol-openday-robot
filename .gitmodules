@@ -1,3 +1,0 @@
-[submodule "rosbuild-ws/attention_head"]
-	path = rosbuild-ws/attention_head
-	url = https://github.com/pet1330/attention_head.git

@@ -34,12 +34,12 @@ class EngageServer:
 	def __init__(self, speech_name):
 		self.server = actionlib.SimpleActionServer('uol_patroller/engage', patrolAction, self.execute, False)
 		self.server.start()
-		rospy.Subscriber("/find_people/feedback", Find_peopleActionFeedback, self.callback) 
+		rospy.Subscriber("/find_people/feedback", Find_peopleActionFeedback, self.feedback_callback) 
 		self.pub = rospy.Publisher('/cmd_vel', Twist)
 		self.file_name = speech_name
 
 
-	def callback(self, fb): 
+	def feedback_callback(self, fb): 
 		# spin the base
 		# turning speed
 		rospy.loginfo("Looking for people.")
@@ -59,7 +59,7 @@ class EngageServer:
 		find_goal.time = goal.find_seconds
 
 		# Call Marys Voice
-		findPeople.send_goal(find_goal)
+		findPeople.send_goal(find_goal, None, None)
 		
 		rospy.logdebug(rospy.get_name() + " setting up")
 		
@@ -104,7 +104,7 @@ class EngageServer:
 		
 		print "_ CLOSING COMUNICATION WITH SERVER _"				
 		self.server.set_succeeded()
-
+		findPeople.cancel_all_goals()
 
 def main():
 	rospy.init_node('engage_server')

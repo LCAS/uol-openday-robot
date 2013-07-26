@@ -14,6 +14,6 @@
 
 *~
 server.log
-rosbuild-ws/*
+rosbuild_ws/*
 *.pyc
 

@@ -1,0 +1,5 @@
+<launch>
+    <include file="$(find uol_launch)/launch/people_detection.launch"/>
+    <node name="attention_head" pkg="attention_head" type="attention_head" output="screen"/>
+    <include file="$(find uol_launch)/launch/patroller.launch"/>
+</launch>

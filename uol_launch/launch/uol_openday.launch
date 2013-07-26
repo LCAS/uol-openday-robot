@@ -1,6 +1,11 @@
+<?xml version="1.0"?>
+
 <launch>
     <arg name="map" value="$(find uol_patroller)/data/maps/MC3106.yaml"/>
+    
     <include file="$(find uol_launch)/launch/people_detection.launch"/>
     <node name="attention_head" pkg="attention_head" type="attention_head" output="screen"/>
-    <include file="$(find scitos_2d_navigation)/launch/scitos_2d_nav.launch" args="$(arg map)"/>
+    <include file="$(find scitos_2d_navigation)/launch/scitos_2d_nav.launch" args="$(arg map)">
+        <arg name="map" value="$(arg map)"/>
+    </launch>
 </launch>

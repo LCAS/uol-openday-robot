@@ -1,39 +1,23 @@
 #include "vars.h"
 
 void vars::executeCB(const uol_openday_common::Find_peopleGoalConstPtr &goal) {
-
+    boost::lock_guard<boost::mutex> lock(mutex);
     end = ros::Time::now();
     end.sec += goal->time;
-
-    do {
-{
-        boost::lock_guard<boost::mutex> lock(mutex);
-        feedback_.targetPoint.x = thread_x;
-        feedback_.targetPoint.y = thread_y;
-        feedback_.targetPoint.z = thread_z;
-}
-        as_.publishFeedback(feedback_);
-		ros::Duration(0.1).sleep();
-    } while (ros::Time::now() < end);
-	feedback_.targetPoint.x = 0;
-        feedback_.targetPoint.y = 0;
-        feedback_.targetPoint.z = 0;
-as_.setSucceeded(result_);
 }
 
-void vars::preemptCB()
-{
-    	ROS_INFO("%s: Preempted", action_name_.c_str());
-    	// set the action state to preempted
-	end = ros::Time::now();
-	as_.setPreempted();
+void vars::preemptCB() {
+    boost::lock_guard<boost::mutex> lock(mutex);
+    end = ros::Time::now();
+    as_.setPreempted();
 }
 
 void vars::locationCallback(const cob_people_detection_msgs::DetectionArray::ConstPtr & detectionArray) {
-    z = 15;
 
+
+    z = 15;
     bool found = false;
-	
+
     geometry_msgs::PoseStamped poseInCamCoords;
     geometry_msgs::PoseStamped poseInRobotCoords;
 
@@ -46,20 +30,21 @@ void vars::locationCallback(const cob_people_detection_msgs::DetectionArray::Con
             poseInCamCoords.pose.position.x *= -1.0;
             poseInCamCoords.pose.position.y *= -1.0;
             found = true;
-			first_notfound = true;
-			
+            first_notfound = true;
+
         }
     }
 
-	if (!found){
-			if(first_notfound)
-				{
-					first_notfound=false;
-					x = 0;
-					y = 0;
-					z = 0;
-				}else {return;}
-	}
+    if (!found) {
+        if (first_notfound) {
+            first_notfound = false;
+            x = 0;
+            y = 0;
+            z = 0;
+        } else {
+            return;
+        }
+    }
 
     poseInCamCoords.header.frame_id = "/head_xtion_rgb_optical_frame";
     try {
@@ -69,16 +54,23 @@ void vars::locationCallback(const cob_people_detection_msgs::DetectionArray::Con
 
     }
 
-        x = poseInRobotCoords.pose.position.x;
-        y = poseInRobotCoords.pose.position.y;
-        z = poseInRobotCoords.pose.position.z;
+    x = poseInRobotCoords.pose.position.x;
+    y = poseInRobotCoords.pose.position.y;
+    z = poseInRobotCoords.pose.position.z;
 
-{    
+    {
         boost::lock_guard<boost::mutex> lock(mutex);
-		thread_x = x;
-		thread_y = y;
-		thread_z = z;
-}
+        if (ros::Time::now() < end) {
+            Server_success = true;
+            feedback_.targetPoint.x = x;
+            feedback_.targetPoint.y = y;
+            feedback_.targetPoint.z = z;
+            as_.publishFeedback(feedback_);
+        } else if (Server_success && ros::Time::now() > end) {
+            Server_success = false;
+            as_.setSucceeded(result_);
+        }
+    }
 
     double threshold = 0.1;
     if ((x - last_x > threshold) ||

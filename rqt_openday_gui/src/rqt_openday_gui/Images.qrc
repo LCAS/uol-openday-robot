@@ -1,0 +1,44 @@
+<RCC>
+    <qresource prefix="/Images/pics">
+        <file>images/home.jpg</file>
+        <file>images/DC.jpg</file>
+        <file>images/FUN_FACT_BUTTON.png</file>
+        <file>images/linda.png</file>
+        <file>images/Menu_Button.png</file>
+        <file>images/new_uni_crest.jpg</file>
+        <file>images/people.jpg</file>
+        <file>images/prospectuscoversAPMS.jpg</file>
+        <file>images/SOCS_MENU_BUTTON.png</file>
+        <file>images/t4_6273202722473610293.jpg</file>
+        <file>images/text.jpg</file>
+        <file>images/University_MENU_BUTTON.png</file>
+        <file>images/Grzegorz.png</file>
+        <file>images/JohnLewak.jpg</file>
+        <file>images/Kevin.jpg</file>
+        <file>images/Marc.jpeg</file>
+        <file>images/MarkDoughty.jpeg</file>
+        <file>images/Murray.jpg</file>
+        <file>images/Bashir.jpg</file>
+        <file>images/Yue.jpg</file>
+        <file>images/O_close.png</file>
+        <file>images/Derek.jpeg</file>
+        <file>images/labs_Pic.jpg</file>
+        <file>images/library.jpg</file>
+        <file>images/campus.jpg</file>
+        <file>images/Shaun.jpg</file>
+        <file>images/VC.jpeg</file>
+        <file>images/VCMessage.jpg</file>
+        <file>images/city_Image.jpg</file>
+        <file>images/Bool.jpg</file>
+        <file>images/Linda_clear.png</file>
+        <file>images/full logo.png</file>
+        <file>images/strands and STRANDS.png</file>
+        <file>images/Strands_Logo.png</file>
+        <file>images/vc.jpg</file>
+        <file>images/Top_Gear.png</file>
+        <file>images/Top_Gear_Logo.jpg</file>
+        <file>images/possestion.jpg</file>
+        <file>images/tom_hanks.jpg</file>
+        <file>images/Young Victoria.jpg</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,12 @@
+<library path="lib/librqt_openday_gui">
+  <class name="rqt_openday_gui/OpendayGui" type="rqt_openday_gui::OpendayGui" base_class_type="rqt_gui_cpp::Plugin">
+    <description>
+      The interface intended for guests to play with during opendays at the University.
+    </description>
+    <qtgui>
+      <label>Openday GUI</label>
+      <icon type="theme">image-x-generic</icon>
+      <statustip>The interface intended for guests to play with during opendays at the University.</statustip>
+    </qtgui>
+  </class>
+</library>

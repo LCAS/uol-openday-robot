@@ -4,7 +4,7 @@ project(rqt_openday_gui)
 set(LIB_NAME rqt_openday_gui)
 
 ## Find catkin macros and libraries
-find_package(catkin REQUIRED COMPONENTS roscpp rospy rqt_gui rqt_gui_cpp)
+find_package(catkin REQUIRED COMPONENTS roscpp rospy rqt_gui rqt_gui_cpp actionlib_msgs actionlib)
 
 ## Include Qt
 find_package(Qt4 REQUIRED COMPONENTS QtCore QtGui QtWebKit)

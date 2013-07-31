@@ -14,6 +14,10 @@
 #include <pluginlib/class_list_macros.h>
 #include <QResource>
 #include "ui_openday_gui.h"
+#include <ros/ros.h>
+#include <actionlib/client/simple_action_client.h>
+#include <actionlib/client/terminal_state.h>
+#include <ros_mary_tts/maryttsAction.h>
 
 namespace rqt_openday_gui {
 
@@ -139,6 +143,8 @@ private slots:
 private:
     Ui::OpendayGui ui;
 	QWidget *widget;
+	actionlib::SimpleActionClient<ros_mary_tts::maryttsAction> ac;
+	void Mary_say(std::string text);
 protected:
     static const int pMainMenu = 0;
 

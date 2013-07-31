@@ -29,8 +29,8 @@ void vars::locationCallback(const cob_people_detection_msgs::DetectionArray::Con
             z = detectionArray->detections[i].pose.pose.position.z;
             poseInCamCoords = detectionArray->detections[i].pose;
             poseInCamCoords.pose.orientation.w = 1.0;
-            poseInCamCoords.pose.position.x *= -1.0;
-            poseInCamCoords.pose.position.y *= -1.0;
+            //poseInCamCoords.pose.position.x *= -1.0;
+            //poseInCamCoords.pose.position.y *= -1.0;
             found = true;
             first_notfound = true;
 

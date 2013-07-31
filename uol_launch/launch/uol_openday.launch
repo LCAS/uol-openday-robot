@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<launch>
+    <arg name="map" value="$(find uol_patroller)/data/maps/MC3106.yaml"/>
+    
+    <include file="$(find uol_launch)/launch/people_detection.launch"/>
+    <include file="$(find scitos_2d_navigation)/launch/scitos_2d_nav.launch" args="$(arg map)">
+        <arg name="map" value="$(arg map)"/>
+    </include>
+</launch>

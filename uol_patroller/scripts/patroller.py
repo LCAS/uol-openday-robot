@@ -43,7 +43,7 @@ class EngagePeople(smach.State):
 		rospy.loginfo("Engage client initialized")
 		goal = patrolGoal()		# Define action
 		goal.find_seconds = 60	# talk for random time
-		goal.mary_seconds = 30
+		goal.mary_seconds = 10
 		goal.location = curLocation
 
 		# Fill in the goal here

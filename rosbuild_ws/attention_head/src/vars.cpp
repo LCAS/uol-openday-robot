@@ -4,16 +4,18 @@ void vars::executeCB(const uol_openday_common::Find_peopleGoalConstPtr &goal) {
     boost::lock_guard<boost::mutex> lock(mutex);
     end = ros::Time::now();
     end.sec += goal->time;
+    as_.setSucceeded(result_);
 }
 
 void vars::preemptCB() {
-    boost::lock_guard<boost::mutex> lock(mutex);
+    ROS_INFO("Trying to cancel");
+    {boost::lock_guard<boost::mutex> lock(mutex);
     end = ros::Time::now();
     as_.setPreempted();
+    ROS_INFO("Cancelled");}
 }
 
 void vars::locationCallback(const cob_people_detection_msgs::DetectionArray::ConstPtr & detectionArray) {
-
 
     z = 15;
     bool found = false;
@@ -68,7 +70,6 @@ void vars::locationCallback(const cob_people_detection_msgs::DetectionArray::Con
             as_.publishFeedback(feedback_);
         } else if (Server_success && ros::Time::now() > end) {
             Server_success = false;
-            as_.setSucceeded(result_);
         }
     }
 

@@ -57,7 +57,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>15</number>
     </property>
     <widget class="QWidget" name="MainMenu">
      <widget class="QPushButton" name="Linda_Button">
@@ -1595,11 +1595,11 @@ p, li { white-space: pre-wrap; }
        <enum>Qt::LeftToRight</enum>
       </property>
       <property name="text">
-       <string>NEXT FUN FACT</string>
+       <string> NEXT FUN FACT</string>
       </property>
       <property name="icon">
        <iconset resource="Images.qrc">
-        <normaloff>:/Images/pics/images/home.jpg</normaloff>:/Images/pics/images/home.jpg</iconset>
+        <normaloff>:/Images/pics/images/info.jpg</normaloff>:/Images/pics/images/info.jpg</iconset>
       </property>
       <property name="iconSize">
        <size>
@@ -2336,7 +2336,6 @@ p, li { white-space: pre-wrap; }
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="Images.qrc"/>
   <include location="Images.qrc"/>
  </resources>
  <connections>

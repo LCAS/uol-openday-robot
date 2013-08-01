@@ -1,7 +1,7 @@
 <RCC>
   <qresource prefix="/Images/pics">
-    <file>Back.png</file>
     <file>images/home.jpg</file>
+    <file>images/info.jpg</file>
     <file>images/DC.jpg</file>
     <file>images/FUN_FACT_BUTTON.png</file>
     <file>images/linda.png</file>

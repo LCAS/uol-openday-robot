@@ -18,6 +18,8 @@
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 #include <ros_mary_tts/maryttsAction.h>
+#include <QScrollArea>
+
 
 namespace rqt_openday_gui {
 
@@ -142,7 +144,7 @@ private slots:
 
 private:
     Ui::OpendayGui ui;
-	QWidget *widget;
+	QScrollArea *widget;
 	actionlib::SimpleActionClient<ros_mary_tts::maryttsAction> ac;
 	void Mary_say(std::string text);
 protected:

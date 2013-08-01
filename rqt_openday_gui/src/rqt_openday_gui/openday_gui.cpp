@@ -21,19 +21,12 @@ void OpendayGui::initPlugin(qt_gui_cpp::PluginContext& context) {
     
     // access standalone command line arguments
     QStringList argv = context.argv();
-    // create QWidget
-    widget = new QWidget();
-    // extend the widget with all attributes and children from UI file
-    ui.setupUi(widget);
-    // add widget to the user interface
-    context.addWidget(widget);
-	
 
-    //Setup service clients and subscribers
-    //reset_client = getNodeHandle().serviceClient<scitos_msgs::ResetMotorStop>(RESET_MOTORS);
-   // emergency_client = getNodeHandle().serviceClient<scitos_msgs::OpendayGui>(EMERGENCY_STOP);
-	//sub = getNodeHandle().subscribe(BUMPER, 1000, &OpendayGui::bumperCallback, this);
-    
+	widget = new QScrollArea();
+	ui.setupUi(widget);	
+	widget->showFullScreen();
+	context.addWidget(widget);
+	
     //connect Qt signals and slots
 	connect(ui.Full_Screen_Logo, SIGNAL(clicked()), this, SLOT(on_Full_Screen_Logo_clicked()));
     connect(ui.Linda_Button, SIGNAL(clicked()), this, SLOT(on_Linda_Button_clicked()));
@@ -43,7 +36,7 @@ void OpendayGui::initPlugin(qt_gui_cpp::PluginContext& context) {
 	connect(ui.Meet_The_Team_Button, SIGNAL(clicked()), this, SLOT(on_Meet_The_Team_Button_clicked()));
 	connect(ui.Tour_Button, SIGNAL(clicked()), this, SLOT(on_Tour_Button_clicked()));
 	connect(ui.Talking_Button, SIGNAL(clicked()), this, SLOT(on_Talking_Button_clicked()));
-	connect(ui.Image_easterEgg, SIGNAL(clicked()), this, SLOT(on_Image_easterEgg_clicked()));
+	//connect(ui.Image_easterEgg, SIGNAL(clicked()), this, SLOT(on_Image_easterEgg_clicked()));
 	connect(ui.Strands_Button, SIGNAL(clicked()), this, SLOT(on_Strands_Button_clicked()));
 	connect(ui.Meet_The_Team_Back, SIGNAL(clicked()), this, SLOT(on_Meet_The_Team_Back_clicked()));
 	connect(ui.Tour_Back, SIGNAL(clicked()), this, SLOT(on_Tour_Back_clicked()));
@@ -88,7 +81,7 @@ void OpendayGui::initPlugin(qt_gui_cpp::PluginContext& context) {
 	connect(ui.Next_Fun_Fact, SIGNAL(clicked()), this, SLOT(on_Next_Fun_Fact_clicked()));
 	connect(ui.Main_Menu_Button, SIGNAL(clicked()), this, SLOT(on_Main_Menu_Button_clicked()));
 	connect(ui.Close_step1, SIGNAL(clicked()), this, SLOT(on_Close_step1_clicked()));
-	connect(ui.close_step2, SIGNAL(clicked()), this, SLOT(on_close_step2_clicked()));
+	//connect(ui.close_step2, SIGNAL(clicked()), this, SLOT(on_close_step2_clicked()));
 }
 
 void OpendayGui::shutdownPlugin()

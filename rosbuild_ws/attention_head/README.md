@@ -31,3 +31,11 @@ source setup.bash
 ```
 rosrun attention_head attention_head
 ```
+
+
+
+* Once running attention_head can also be used as an actionlib server
+* The Goal state is an int32 time. This is the maximum amount of time the server will respond
+* The Feedbck state is the Pose which returns the postion
+* There is no result, as this would end the server
+
